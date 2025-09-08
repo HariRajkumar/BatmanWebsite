@@ -80,6 +80,10 @@ gsap.to(batsignal, {
     onComplete: () => {
         lockBeamPosition();
         document.body.style.overflow = "auto";   // 🔓 Unlock scrolling
+
+        // ✨ Show the welcome text
+        const msg = document.getElementById("gothamMessage");
+        msg.classList.add("show"); 
     }
 });
 
@@ -142,7 +146,74 @@ function lockBeamPosition() {
     lockedClipPath = `polygon(${p1}, ${p2}, ${p3})`;
 }
 
+updateSpotlight(); 
 
-updateSpotlight();
+function batJumpscare() {
+  const container = document.querySelector("#batContainer");
+  if (!container) return;
+
+  const numBats = 15;
+  const containerRect = container.getBoundingClientRect();
+  const vw = containerRect.width;
+  const vh = containerRect.height;
+
+  for (let i = 0; i < numBats; i++) {
+    const bat = document.createElement("div");
+    bat.classList.add("bat");
+
+    // Start near the bottom of sec1
+    bat.style.left = Math.random() * vw + "px";
+    bat.style.top = vh + 50 + "px";
+
+    container.appendChild(bat);
+
+    gsap.timeline()
+      .to(bat, {
+        duration: 0.2,
+        opacity: 1
+      })
+      .to(bat, {
+        duration: 1.7 + Math.random() * 0.6,
+        x: (Math.random() - 0.5) * 400,
+        y: -vh - 100,
+        rotation: Math.random() * 360,
+        ease: "power2.out"
+      })
+      .to(bat, {
+        duration: 0.8,
+        opacity: 0,
+        ease: "power1.in",
+        onComplete: () => bat.remove()
+      });
+  }
+}
+
+const sec1 = document.querySelector(".sec1"); // if it's a class
+
+// const observer = new IntersectionObserver((entries) => {
+//     entries.forEach(entry => {
+//         if (entry.isIntersecting) {
+//             // 🦇 Trigger bats ONCE
+//             batJumpscare();
+//             observer.unobserve(sec1);
+//         }
+//     });
+// }, {
+//     root: null,
+//     threshold: 0.5 // halfway through sec1
+// });
+
+gsap.registerPlugin(ScrollTrigger);
+
+ScrollTrigger.create({
+  trigger: "#sec1",        // the section that triggers
+  start: "top 50%",        // when sec1 is halfway visible
+  once: true,              // only trigger once
+  onEnter: () => batJumpscare()
+});
+
+observer.observe(sec1);
+
+
 
 

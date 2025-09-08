@@ -12,12 +12,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: gilroy;
+    /* font-family: gilroy; */
+    font-family: anime-ace;
 }
 
 html, body {
     height: 100%;
     width: 100%;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 header {
@@ -70,10 +75,18 @@ main .sec0 {
     /* perspective: 1000px; */
 }
 
+main .sec01 {
+    height: 5vh;
+    width: 100%;
+    background-color: #040504;
+}
+
 main .sec1 {
     height: 100vh;
     width: 100%;
     background-color: #252525;
+    background-image: url(The_Batcave_29.jpg);
+    background-size: cover;
 }
 
 main .sec2 {
@@ -138,7 +151,7 @@ main .sec6 {
     pointer-events: none;
     z-index: 1;
 
-    background: rgba(255, 255, 150, 0.24); /* Beam color */
+    background: rgba(255, 255, 150, 0.148); /* Beam color */
     filter: blur(20px);
     clip-path: polygon(50% 50%, 50% 50%, 50% 50%); /* Will be updated dynamically */
 }
@@ -148,5 +161,44 @@ main .sec6 {
 .batsignal.glow {
     box-shadow: 0 0 80px 40px rgba(255, 255, 100, 0.8); /*Adjust glow size/intensity*/
     border-radius: 50%; /* Glow matches circular shape */
+} 
+
+.hidden-message {
+    position: absolute;
+    bottom: 30px; /* adjust so it sits at bottom of sec0 */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #f5f5f5;
+    text-align: center;
+    opacity: 0; /* hidden by default */
+    transition: opacity 1s ease;
+    max-width: 80%;
+    line-height: 1.5;
+    text-shadow: 2px 2px 8px black; /* glowing readability */
 }
+
+.hidden-message.show {
+    opacity: 1; /* fades in */
+}
+
+#batContainer {
+  position: relative;   /* now relative to sec1 */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.bat {
+  position: absolute;
+  width: 48px;
+  height: 28px;
+  background: url('Bats.png') no-repeat center/contain;
+  opacity: 0;
+}
+
+
 
